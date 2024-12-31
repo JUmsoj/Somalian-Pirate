@@ -32,6 +32,10 @@ public class OilBarrelScript : MonoBehaviour
             picked_up = false;
             gameObject.transform.parent = null;
             gun.active = true;
+            if (!gun.isActiveAndEnabled)
+            {
+                gun.gameObject.SetActive(true);
+            }
             body.bodyType = RigidbodyType2D.Dynamic;
             _collider_.enabled=true;
         }
@@ -74,6 +78,10 @@ public class OilBarrelScript : MonoBehaviour
             {
                 money++;
                 gun.active = true;
+                if(!gun.isActiveAndEnabled)
+                {
+                    gun.gameObject.SetActive(true);
+                }
                 Debug.LogError(money);
                 Instantiate(Resources.Load<GameObject>("OilBarrel"), position: new Vector2(-12, 6.14f), rotation: Quaternion.identity);
                 
