@@ -8,6 +8,11 @@ public class PlayerScript : MonoBehaviour
     Rigidbody2D rb;
     private InputSystem_Actions _actions;
     [SerializeField] private float speed;
+    public int health
+    {
+        get;
+        set;
+    } = 100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnDestroy()
     {
@@ -15,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void Awake()
     {
+        
         _actions = new();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -24,7 +30,7 @@ public class PlayerScript : MonoBehaviour
         _actions.Player.Jump.Enable();
         _actions.Player.Jump.performed += (ctx) =>
         {
-            rb.AddForceY((100*2)^2);
+            rb.AddForceY(2000);
         };
     }
     private void OnDisable()
@@ -36,6 +42,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0) Destroy(gameObject);
         Vector2 move = _actions.Player.Move.ReadValue<Vector2>()*speed;
         if(move != Vector2.zero) Debug.Log(move);
         
@@ -50,19 +57,31 @@ public class PlayerScript : MonoBehaviour
     {
         if (!grounded)
         {
-            rb.linearVelocityY = -2f;
+            rb.linearVelocityY = -1f;
         }
        
     }
     private void OnCollisionEnter2D(Collision2D hit)
     {
-        Debug.Log("thing");
-        grounded = true;
+        if (hit.gameObject.CompareTag("Ship"))
+        {
+            Debug.Log("thing");
+            grounded = true;
+        }
+        else if (hit.gameObject.name == "bullet(Clone)")
+        {
+            health -= 20;
+            Debug.LogError(health);
+            Destroy(hit.gameObject);
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Debug.Log("Bro");
+        if (collision.gameObject.CompareTag("Ship"))
+        {
+            Debug.Log("Bro");
             grounded = false;
+        }
         
     }
 }
