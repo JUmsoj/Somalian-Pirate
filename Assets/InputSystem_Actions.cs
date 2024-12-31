@@ -71,6 +71,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pick_Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e010d29-de8e-48af-a8b2-1c9d5a8073f9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2455bc6-a722-40c5-ba38-7e1662741b18"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,6 +256,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Axis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3504aea-8637-4170-bdeb-7628029d40f0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17ffb9fb-b5dd-44b6-bb76-353f9efbe22a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -828,6 +868,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Axis = m_Player.FindAction("Axis", throwIfNotFound: true);
+        m_Player_Pick_Up = m_Player.FindAction("Pick_Up", throwIfNotFound: true);
+        m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -912,6 +954,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Axis;
+    private readonly InputAction m_Player_Pick_Up;
+    private readonly InputAction m_Player_Drop;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -921,6 +965,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Axis => m_Wrapper.m_Player_Axis;
+        public InputAction @Pick_Up => m_Wrapper.m_Player_Pick_Up;
+        public InputAction @Drop => m_Wrapper.m_Player_Drop;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -945,6 +991,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Axis.started += instance.OnAxis;
             @Axis.performed += instance.OnAxis;
             @Axis.canceled += instance.OnAxis;
+            @Pick_Up.started += instance.OnPick_Up;
+            @Pick_Up.performed += instance.OnPick_Up;
+            @Pick_Up.canceled += instance.OnPick_Up;
+            @Drop.started += instance.OnDrop;
+            @Drop.performed += instance.OnDrop;
+            @Drop.canceled += instance.OnDrop;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -964,6 +1016,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Axis.started -= instance.OnAxis;
             @Axis.performed -= instance.OnAxis;
             @Axis.canceled -= instance.OnAxis;
+            @Pick_Up.started -= instance.OnPick_Up;
+            @Pick_Up.performed -= instance.OnPick_Up;
+            @Pick_Up.canceled -= instance.OnPick_Up;
+            @Drop.started -= instance.OnDrop;
+            @Drop.performed -= instance.OnDrop;
+            @Drop.canceled -= instance.OnDrop;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1151,6 +1209,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnAxis(InputAction.CallbackContext context);
+        void OnPick_Up(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

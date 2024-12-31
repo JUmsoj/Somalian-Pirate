@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <engine:VisualElement name="Container" style="flex-grow: 1;">
-        <engine:Label text="Hey" />
+        <engine:Label text="MONEY: " style="height: 27px; white-space: pre; -unity-text-align: upper-left; position: absolute; top: -1px; left: 110px; width: 173px;" />
     </engine:VisualElement>
 </engine:UXML>

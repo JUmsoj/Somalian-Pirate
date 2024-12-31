@@ -1,0 +1,8 @@
+.button {
+    position: relative;
+    align-items: center;
+    font-size: 20px;
+    -unity-text-align: upper-center;
+    align-self: auto;
+    justify-content: flex-start;
+}

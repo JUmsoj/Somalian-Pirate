@@ -10,10 +10,12 @@ public class GunScript : MonoBehaviour
     private Animator anim;
     private int ammo = 10;
     private InputSystem_Actions controls;
+    public bool active { get; set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        active = true;
         bullet = Resources.Load<GameObject>("bullet");
         controls = new();
         anim = GetComponent<Animator>();
@@ -36,7 +38,7 @@ public class GunScript : MonoBehaviour
     }
     private void Update()
     {
-       
+        gameObject.SetActive(active);
     }
     private void OnEnable()
     {
