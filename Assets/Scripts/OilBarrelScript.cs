@@ -1,22 +1,27 @@
 using System.Data.SqlTypes;
+using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 public class OilBarrelScript : MonoBehaviour
 {
+    private static bool alreadpickedip = false;
     private InputSystem_Actions controls;
     public static int money = 0;
-    private bool picked_up = false;
+    [SerializeField] private bool picked_up = false;
     private GameObject player;
     [SerializeField] private float timer = 5;
     private GunScript gun;
     private Rigidbody2D body;
     private float distance;
     private BoxCollider2D _collider_;
+    private UnityEngine.UIElements.Label label;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Pick_Up(InputAction.CallbackContext ctx)
     {
-        if (distance < 10)
+        if (distance < 10 && !alreadpickedip)
         {
+            alreadpickedip=true;
             picked_up = true;
             gameObject.transform.parent = player.transform;
             gameObject.transform.position = gun.transform.position;
@@ -27,8 +32,9 @@ public class OilBarrelScript : MonoBehaviour
     }
     void Drop(InputAction.CallbackContext ctx)
     {
-        if (picked_up)
+        if (picked_up && alreadpickedip)
         {
+            alreadpickedip = false;
             picked_up = false;
             gameObject.transform.parent = null;
             gun.active = true;
@@ -51,6 +57,10 @@ public class OilBarrelScript : MonoBehaviour
         gun = player.transform.GetChild(0).gameObject.GetComponent<GunScript>();
         controls = new();
     }
+    private void Start()
+    {
+        label = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Money");
+    }
     private void OnEnable()
     {
         controls.Player.Drop.Enable();
@@ -71,12 +81,14 @@ public class OilBarrelScript : MonoBehaviour
     void Update()
     {
         distance = Mathf.Abs(Vector2.Distance(gameObject.transform.position, player.transform.position));
-        if (picked_up)
+        if (picked_up && alreadpickedip)
         {
             timer -= Time.deltaTime;
             if(timer <= 0)
             {
                 money++;
+                timer = 5;
+                label.text = $"MONEY: {money}";
                 gun.active = true;
                 if(!gun.isActiveAndEnabled)
                 {
