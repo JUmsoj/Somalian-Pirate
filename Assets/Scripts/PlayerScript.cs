@@ -2,12 +2,14 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] bool grounded = false;
     Rigidbody2D rb;
     private InputSystem_Actions _actions;
     [SerializeField] private float speed;
+    UIDocument doc;
     public int health
     {
         get;
@@ -20,7 +22,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void Awake()
     {
-        
+        doc = GameObject.FindFirstObjectByType<UIDocument>();
         _actions = new();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -42,6 +44,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        doc.rootVisualElement.Q<Label>("Health").text = $"Health: {health}";
         if (health <= 0) Destroy(gameObject);
         Vector2 move = _actions.Player.Move.ReadValue<Vector2>()*speed;
         if(move != Vector2.zero) Debug.Log(move);
