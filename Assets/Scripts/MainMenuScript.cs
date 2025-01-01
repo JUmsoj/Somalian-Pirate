@@ -12,7 +12,7 @@ public class MainMenuScript : MonoBehaviour
     {
         doc = GetComponent<UIDocument>();
         button = (Button)doc.rootVisualElement.Q("Play");
-        button.RegisterCallbackOnce<ClickEvent>((Event) => SceneManager.LoadScene(0));
+        button.RegisterCallbackOnce<ClickEvent>((Event) => SceneManager.LoadScene("Ship"));
     }
     void Start()
     {
