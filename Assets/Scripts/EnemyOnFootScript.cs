@@ -23,18 +23,20 @@ public class EnemyOnFootScript : MonoBehaviour
     void Shoot()
     {
         bool dir = gameObject.transform.position.x <= player.transform.position.x;
-        rb.AddForce((player.transform.position-gameObject.transform.position ) * 100);
+        rb.AddForce((player.transform.position-gameObject.transform.position ));
         GameObject gun = transform.GetChild(0).gameObject;
-        GetComponentInChildren<Animator>().SetTrigger("Shoot");
+        Debug.LogError("Shot");
         gun.transform.rotation = dir ? Quaternion.Euler(new Vector3(180, -180, 180)) : Quaternion.Euler(new Vector3(0, -180));
         GameObject bullet = Instantiate(Resources.Load<GameObject>("bullet"), new Vector2(gun.transform.position.x+3, gun.transform.position.y), dir ? Quaternion.Euler(new Vector3(180, -180, 180)) : Quaternion.Euler(new Vector3(0, -180)));
         Rigidbody2D rigidbody2d = bullet.GetComponent<Rigidbody2D>();
         rigidbody2d.gravityScale = 0.1f;
         if (dir) rigidbody2d.AddForceX(10000);
+        
         else
         {
             rigidbody2d.AddForceX(-10000);
         }
+        GetComponentInChildren<Animator>().SetTrigger("Shoot");
     }
     // Update is called once per frame
     void Update()
@@ -44,7 +46,7 @@ public class EnemyOnFootScript : MonoBehaviour
         {
             Shoot();
             
-            attack_cooldown = 3;
+            attack_cooldown = 5;
         }
         move = player.transform.position - gameObject.transform.position;
         rb.linearVelocityX = (move.x*speed)/5;

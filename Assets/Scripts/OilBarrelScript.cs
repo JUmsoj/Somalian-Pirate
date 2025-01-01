@@ -1,5 +1,6 @@
 using System.Data.SqlTypes;
 using System.Reflection.Emit;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -46,6 +47,15 @@ public class OilBarrelScript : MonoBehaviour
             _collider_.enabled=true;
         }
         
+    }
+    void Spawn(int times)
+    {
+        for(int i = 0; i < times; i++)
+        {
+            float random_x = UnityEngine.Random.Range(0, 10);
+            var barrel = Instantiate<GameObject>(Resources.Load<GameObject>("OilBarrel"), new Vector2(random_x, 5), Quaternion.identity);
+            barrel.GetComponent<Rigidbody2D>().AddForceY(-20);
+        }
     }
     private void Awake()
     {
@@ -95,8 +105,8 @@ public class OilBarrelScript : MonoBehaviour
                     gun.gameObject.SetActive(true);
                 }
                 Debug.LogError(money);
-                Instantiate(Resources.Load<GameObject>("OilBarrel"), position: new Vector2(-12, 6.14f), rotation: Quaternion.identity);
-                
+                Spawn(money);
+                alreadpickedip = false;
                 Destroy(gameObject);
             }
         }
