@@ -1,8 +1,9 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UISTUFF/Button.uss?fileID=7433441132597879392&amp;guid=96c8568e910cc464ca0bfe4f3e380919&amp;type=3#Button" />
-    <engine:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: flex-start; flex-wrap: nowrap;">
+    <engine:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: flex-start; flex-wrap: wrap;">
         <engine:Label text="Main Menu&#10;" name="Main-Menu" class="button" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; flex-grow: 1; margin-top: 20px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px;" />
         <engine:Button text="Play" name="Play" class="button" style="flex-shrink: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; white-space: nowrap; margin-top: 20px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px; flex-grow: 1;" />
         <engine:Button text="Settings&#10;" name="Settings" class="button" style="flex-wrap: nowrap; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; width: 500px; align-self: center; margin-top: 20px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px; font-size: 50px; flex-grow: 1;" />
+        <engine:FloatField label="Difficulty:" value="0" class="button" />
     </engine:VisualElement>
 </engine:UXML>

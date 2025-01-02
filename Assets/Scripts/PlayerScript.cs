@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 public class PlayerScript : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class PlayerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         Destroy(GameObject.Find("KillScreen"));
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
     }
     private void Awake() 
     {

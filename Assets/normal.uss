@@ -7,7 +7,7 @@
     padding-bottom: 20px;
     padding-left: 20px;
     visibility: visible;
-    background-color: rgb(255, 18, 18);
+    background-color: rgba(56, 56, 56, 0);
     background-position-x: center 0;
     background-size: 100% 100%;
     -unity-background-scale-mode: stretch-to-fill;
@@ -20,4 +20,7 @@
     background-repeat: no-repeat no-repeat;
     -unity-slice-scale: 0;
     -unity-text-align: middle-center;
+    color: rgb(255, 0, 0);
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    flex-grow: 0.5;
 }
