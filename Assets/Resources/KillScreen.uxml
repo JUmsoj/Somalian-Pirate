@@ -1,0 +1,11 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/normal.uss?fileID=7433441132597879392&amp;guid=1836b767aa42e174bbcd27b066a9a8e4&amp;type=3#normal" />
+    <engine:VisualElement name="rootvisualelement" style="flex-grow: 1; align-items: flex-start; flex-direction: column; flex-wrap: wrap; width: auto; justify-content: flex-start; align-self: stretch; flex-shrink: 0;">
+        <engine:VisualElement style="flex-grow: 1; flex-shrink: 0; width: 249px; flex-basis: auto; height: auto;">
+            <engine:Label text="YOU DIED MATE" class="thing" style="align-items: auto; justify-content: flex-start; flex-direction: column; transform-origin: center; translate: 0 0; flex-shrink: 1; width: auto; flex-wrap: wrap; align-self: auto; white-space: pre-wrap; -unity-text-align: upper-center; align-content: auto; flex-grow: 0; flex-basis: auto;" />
+            <engine:Label text="IMAGINE LOSING" class="thing" />
+            <engine:Label text="COULDNT BE ME" class="thing" />
+            <engine:Label text="LOLLLLLL" class="thing" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

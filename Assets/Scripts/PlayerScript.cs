@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -18,9 +20,30 @@ public class PlayerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnDestroy()
     {
+        KillScreen();
+    }
+    void KillScreen()
+    {
+        
+        UIDocument screen = new GameObject("KillScreen").AddComponent<UIDocument>();
+        screen.panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
+        screen.panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+        screen.panelSettings.themeStyleSheet = AssetDatabase.LoadAssetAtPath<ThemeStyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
+        screen.visualTreeAsset = Resources.Load<VisualTreeAsset>("KillScreen");
+        foreach (var i in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.InstanceID))
+        {
+            if (i.name != "Main Camera" && i.name != "KillScreen") Destroy(i);
+        }
+        screen.gameObject.AddComponent<Sigma>().StartCoroutine(enumerator());
+        
+    }
+    private IEnumerator enumerator()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(GameObject.Find("KillScreen"));
         Application.Quit();
     }
-    private void Awake()
+    private void Awake() 
     {
         doc = GameObject.FindFirstObjectByType<UIDocument>();
         _actions = new();
@@ -87,4 +110,8 @@ public class PlayerScript : MonoBehaviour
         }
         
     }
+}
+public class Sigma : MonoBehaviour
+{
+
 }
