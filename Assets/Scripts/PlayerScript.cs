@@ -1,4 +1,6 @@
+using Mono.Cecil.Cil;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -40,7 +42,7 @@ public class PlayerScript : MonoBehaviour
     }
     private IEnumerator enumerator()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(40);
         Destroy(GameObject.Find("KillScreen"));
         SceneManager.LoadScene("MainMenu");
     }
@@ -114,5 +116,35 @@ public class PlayerScript : MonoBehaviour
 }
 public class Sigma : MonoBehaviour
 {
+    private float cooldown = 1.0f; // Set your cooldown duration
+    private bool completed = false;
+    
+
+    void Update()
+    {
+        cooldown -= Time.deltaTime;
+        if (!completed && cooldown <= 0)
+        {
+            var doc = gameObject.GetComponent<UIDocument>();
+
+            completed = true;
+            List<StylePropertyName> styles = new List<StylePropertyName>();
+            styles.Add(new StylePropertyName("opacity"));
+
+            foreach(VisualElement item in doc.rootVisualElement.Q<VisualElement>("visual").Children())
+            {
+                item.AddToClassList ("word-change");
+                 IEnumerator Wait()
+                {
+                    yield return new WaitForSeconds(3f);
+                    item.RemoveFromClassList("word-change");
+                }
+                StartCoroutine(Wait());
+               
+            }
+        }
+    }
+   
+    
 
 }

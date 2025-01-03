@@ -1,9 +1,9 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/normal.uss?fileID=7433441132597879392&amp;guid=1836b767aa42e174bbcd27b066a9a8e4&amp;type=3#normal" />
     <engine:VisualElement name="rootvisualelement" style="flex-grow: 1; align-items: stretch; flex-direction: column; flex-wrap: wrap; width: auto; justify-content: flex-start; align-self: auto; flex-shrink: 0;">
-        <engine:VisualElement style="flex-grow: 1; flex-shrink: 1; width: 741px; flex-basis: auto; height: auto; align-items: center; justify-content: flex-start; align-self: center; flex-direction: column;">
-            <engine:Label text="YOU DIED" name="Label" class="thing" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 0; flex-shrink: 1;" />
-            <engine:Label text="MASSIVE SKILL ISSUE" class="thing" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-items: center; font-size: 20px;" />
+        <engine:VisualElement name="visual" style="flex-grow: 1; flex-shrink: 1; width: 741px; flex-basis: auto; height: auto; align-items: center; justify-content: flex-start; align-self: center; flex-direction: column;">
+            <engine:Label text="YOU DIED&#10;" name="Label" class="thing word" />
+            <engine:Label text="GET GOOD&#10;" name="Insult" class="thing word" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
