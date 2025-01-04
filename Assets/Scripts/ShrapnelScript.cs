@@ -6,9 +6,18 @@ public class ShrapnelScript : MonoBehaviour
     Rigidbody2D body;
     [SerializeField] bool onground = false;
     [SerializeField] float lifespan;
+    [SerializeField] private float decomposition = 5;
     private void Update()
     {
         lifespan += Time.deltaTime;
+        if(onground )
+        {
+            decomposition -= Time.deltaTime;
+            if(decomposition <= 0 )
+            {
+                Destroy(gameObject);
+            }
+        }
     }
     private void Awake()
     {

@@ -10,10 +10,12 @@ public class GunScript : MonoBehaviour
     private Animator anim;
     private int ammo = 10;
     private InputSystem_Actions controls;
+    public bool active { get; set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        active = true;
         bullet = Resources.Load<GameObject>("bullet");
         controls = new();
         anim = GetComponent<Animator>();
@@ -36,7 +38,7 @@ public class GunScript : MonoBehaviour
     }
     private void Update()
     {
-       
+        gameObject.SetActive(active);
     }
     private void OnEnable()
     {
@@ -57,13 +59,15 @@ public class GunScript : MonoBehaviour
     
     public void Other()
     {
-        Vector2 start_point = new Vector2(gameObject.transform.position.x+4, gameObject.transform.position.y);
+        Vector2 start_point = new Vector2(gameObject.transform.position.x+(dir), gameObject.transform.position.y);
+        Debug.Log(start_point);
         var Bullet = Instantiate(bullet, position: start_point, rotation: Quaternion.identity);
         
         Rigidbody2D rb = Bullet?.GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0;
+        Bullet.AddComponent<BulletScript>();
+        rb.gravityScale = 0.1f;
         if (rb != null) Debug.Log("Hey");
-        rb.linearVelocityX = dir*3;
+        rb.AddForce(new Vector2(dir * 500, 0));
         
     }
     void Start()
@@ -73,4 +77,18 @@ public class GunScript : MonoBehaviour
 
     // Update is called once per frame
     
+}
+public class BulletScript : MonoBehaviour
+{
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Ship"))
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning($"Hit {collision.gameObject.name}");
+        }
+    }
 }

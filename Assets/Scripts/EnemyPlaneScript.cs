@@ -87,7 +87,7 @@ public class EnemyPlaneScript : MonoBehaviour
     void DropTheBomb()
     {
         Instantiate(Resources.Load("Shell"), position: gameObject.transform.position, rotation: UnityEngine.Quaternion.identity).GetComponent<Rigidbody2D>()?.AddForceY(-6);
-        cooldown = 3/Mathf.Floor(spawnScript.frequency);
+        cooldown = MainMenuScript.difficulty*(3/Mathf.Floor(spawnScript.frequency));
     }
     void ParaDrop()
     {
