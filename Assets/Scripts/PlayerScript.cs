@@ -20,14 +20,21 @@ public class PlayerScript : MonoBehaviour
         get;
         set;
     } = 100;
+    public bool thing = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnDestroy()
     {
-        KillScreen();
-    }
-    void KillScreen()
-    {
         
+         if(!thing) KillScreen();
+    }
+    public static void KillScreen()
+    {
+      IEnumerator enumerator()
+        {
+            yield return new WaitForSeconds(40);
+            Destroy(GameObject.Find("KillScreen"));
+            SceneManager.LoadScene("MainMenu");
+        }
         UIDocument screen = new GameObject("KillScreen").AddComponent<UIDocument>();
         screen.panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
         screen.panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
@@ -40,12 +47,7 @@ public class PlayerScript : MonoBehaviour
         screen.gameObject.AddComponent<Sigma>().StartCoroutine(enumerator());
         
     }
-    private IEnumerator enumerator()
-    {
-        yield return new WaitForSeconds(40);
-        Destroy(GameObject.Find("KillScreen"));
-        SceneManager.LoadScene("MainMenu");
-    }
+    
     private void Awake() 
     {
         doc = GameObject.FindFirstObjectByType<UIDocument>();
@@ -70,7 +72,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        doc.rootVisualElement.Q<Label>("Health").text = $"Health: {health}";
+
+        if(doc.rootVisualElement.Q<Label>("Health") != null) doc.rootVisualElement.Q<Label>("Health").text = $"Health: {health}";
         if (health <= 0) Destroy(gameObject);
         Vector2 move = _actions.Player.Move.ReadValue<Vector2>()*speed;
         if(move != Vector2.zero) Debug.Log(move);

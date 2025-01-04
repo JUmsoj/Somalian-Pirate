@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/settings.uss?fileID=7433441132597879392&amp;guid=50d22075aaa687c41ac10f0fd5767012&amp;type=3#settings" />
+    <engine:VisualElement name="root" style="flex-grow: 1; align-items: center;">
+        <engine:Label text="Settings&#10;" name="Header" style="-unity-text-align: middle-center; background-color: rgba(0, 0, 0, 0);" />
+        <engine:Button text="Exit to Main Menu" name="ExitMainMenu" class="exit" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+        <engine:Button text="Exit to Desktop" name="ExitGame" class="exit" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+    </engine:VisualElement>
+</engine:UXML>
