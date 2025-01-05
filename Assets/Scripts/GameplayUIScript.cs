@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,43 +48,45 @@ public class GameplayUIScript : MonoBehaviour
         doc.visualTreeAsset = Settings;
         exitmainmenu = doc.rootVisualElement.Q<Button>("ExitMainMenu");
         exitgame = doc.rootVisualElement.Q<Button>("ExitGame");
-        Callbacks(false);
+        Callbacks("pause");
 
 
     }
-    private void Callbacks(bool hud)
+    private void Callbacks(string ui)
     {
-        if(hud)
+        switch(ui.ToLower())
         {
-            if (exitgame != null)
-            {
-                exitgame.UnregisterCallback<ClickEvent>(e =>
+            case "hud":
+                if (exitgame != null)
+                {
+                    exitgame.UnregisterCallback<ClickEvent>(e =>
+                    {
+                        Application.Quit();
+                    });
+                    exitmainmenu.UnregisterCallback<ClickEvent>((e) =>
+                    {
+                        SceneManager.LoadScene("MainMenu");
+                    });
+                }
+                medkit.RegisterCallback<ClickEvent>(evt => PowerUp("medkit"));
+                ammo.RegisterCallback<ClickEvent>((evt) => PowerUp("ammo"));
+                break;
+
+            case "pause":
+                ammo.UnregisterCallback<ClickEvent>((evt) => PowerUp("ammo"));
+
+                medkit.UnregisterCallback<ClickEvent>(e => PowerUp("medkit"));
+                exitmainmenu.RegisterCallbackOnce<ClickEvent>((e) =>
+                {
+                    GameObject.FindFirstObjectByType<PlayerScript>().thing = true;
+                    SceneManager.LoadScene("MainMenu");
+                });
+                exitgame.RegisterCallbackOnce<ClickEvent>(e =>
                 {
                     Application.Quit();
                 });
-                exitmainmenu.UnregisterCallback<ClickEvent>((e) =>
-                {
-                    SceneManager.LoadScene("MainMenu");
-                });
-            }
-            medkit.RegisterCallback<ClickEvent>(evt => PowerUp(false));
-            ammo.RegisterCallback<ClickEvent>((evt) => PowerUp(true));
+                break;
 
-        }
-        else if(!hud)
-        {
-            ammo.UnregisterCallback<ClickEvent>((evt) => PowerUp(true));
-
-            medkit.UnregisterCallback<ClickEvent>(e => PowerUp(false));
-            exitmainmenu.RegisterCallbackOnce<ClickEvent>((e) =>
-            {
-                GameObject.FindFirstObjectByType<PlayerScript>().thing = true;
-                SceneManager.LoadScene("MainMenu");
-            });
-            exitgame.RegisterCallbackOnce<ClickEvent>(e =>
-            {
-                Application.Quit();
-            });
         }
     }
     void OnHUD()
@@ -93,36 +96,42 @@ public class GameplayUIScript : MonoBehaviour
         doc.visualTreeAsset = HUD;
         ammo = doc.rootVisualElement.Q<VisualElement>("PowerUps").Q<Button>("PowerUp1");
         medkit = doc.rootVisualElement.Q<VisualElement>("PowerUps").Q<Button>("PowerUp2");
-        Callbacks(true);
+        Callbacks("hud");
 
 
 
     }
-    void PowerUp(bool ammo)
+    void PowerUp(string ammo)
     {
-        if(ammo)
-        {
-            if (OilBarrelScript.money - 10 <= 0)
-            {
+        switch (ammo.ToLower()) {
+            case "ammo":
+                if (OilBarrelScript.money - 10 <= 0)
+                {
 
-                OilBarrelScript.money -= 10;
-                GameObject.FindFirstObjectByType<GunScript>().ammo = 10;
-                Debug.LogError("Hey");
-            }
-        }
-        else
-        {
-            medkit.RegisterCallback<ClickEvent>(evt =>
-            {
+                    OilBarrelScript.money -= 10;
+                    GameObject.FindFirstObjectByType<GunScript>().ammo = 10;
+                    Debug.LogError("Hey");
+                }
+                break;
+
+
+            case "medkit":
                 if (OilBarrelScript.money - 20 >= 0)
                 {
                     OilBarrelScript.money -= 20;
                     GameObject.FindFirstObjectByType<PlayerScript>().health = 100;
-
+    
                 }
-            });
+            break;
         }
+
+
+           
+    
     }
+           
+        
+    
     void Start()
     {
         

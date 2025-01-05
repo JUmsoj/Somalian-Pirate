@@ -22,13 +22,10 @@ public class PlayerScript : MonoBehaviour
     } = 100;
     public bool thing = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void OnDestroy()
-    {
-        
-         if(!thing) KillScreen();
-    }
+    
     public static void KillScreen()
     {
+        GameObject player = null;
       IEnumerator enumerator()
         {
             yield return new WaitForSeconds(40);
@@ -42,10 +39,20 @@ public class PlayerScript : MonoBehaviour
         screen.visualTreeAsset = Resources.Load<VisualTreeAsset>("KillScreen");
         foreach (var i in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.InstanceID))
         {
-            if (i.name != "Main Camera" && i.name != "KillScreen") Destroy(i);
+            if (i.name != "Main Camera" && i.name != "KillScreen") {
+                if (i.name != "Triangle")
+                {
+                    Destroy(i);
+                }
+                else
+                {
+                    player = i;
+                }
+
+            }
         }
         screen.gameObject.AddComponent<Sigma>().StartCoroutine(enumerator());
-        
+        Destroy(player);
     }
     
     private void Awake() 
@@ -74,7 +81,10 @@ public class PlayerScript : MonoBehaviour
     {
 
         if(doc.rootVisualElement.Q<Label>("Health") != null) doc.rootVisualElement.Q<Label>("Health").text = $"Health: {health}";
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0)
+        {
+            KillScreen();
+        }
         Vector2 move = _actions.Player.Move.ReadValue<Vector2>()*speed;
         if(move != Vector2.zero) Debug.Log(move);
         
