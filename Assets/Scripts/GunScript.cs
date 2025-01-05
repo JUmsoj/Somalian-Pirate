@@ -1,7 +1,9 @@
+using System;
 using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GunScript : MonoBehaviour
@@ -18,8 +20,18 @@ public class GunScript : MonoBehaviour
         }
         set
         {
-            amm = value;
-            GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Ammunition").text = $"Ammo : {amm}";
+            if (SceneManager.GetActiveScene().name == "Ship")
+            {
+                try
+                {
+                    amm = value;
+                    GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Ammunition").text = $"Ammo : {amm}";
+                }
+                catch(Exception)
+                {
+
+                }
+            }
         }
     }
     private InputSystem_Actions controls;

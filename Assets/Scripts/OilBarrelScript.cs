@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 public class OilBarrelScript : MonoBehaviour
 {
     private static bool alreadpickedip = false;
@@ -17,6 +18,7 @@ public class OilBarrelScript : MonoBehaviour
         }
         set { 
             cash = value;
+            if(SceneManager.GetActiveScene().name == "Ship")
             GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<Label>("Money").text = $"Money: {cash}";
         }
     }
