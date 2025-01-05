@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody2D rb;
     private InputSystem_Actions _actions;
     [SerializeField] private float speed;
-    UIDocument doc;
+     UIDocument doc;
     public int health
     {
         get;

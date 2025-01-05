@@ -1,7 +1,14 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UISTUFF/HUD.uss?fileID=7433441132597879392&amp;guid=11b80b4d412cb3345adc0355d463d183&amp;type=3#HUD" />
-    <engine:VisualElement name="Container" style="flex-grow: 1; align-items: flex-start;">
-        <engine:Label text="MONEY: " name="Money" style="height: 25px; white-space: pre; -unity-text-align: upper-left; position: relative; top: -3px; left: -2px; width: 347px;" />
-        <engine:Label text="Health:" name="Health" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; align-items: stretch; flex-direction: column-reverse;">
+        <engine:VisualElement name="PowerUps" style="flex-grow: 0; flex-direction: row; justify-content: flex-start; align-items: stretch; width: auto; height: 50px;">
+            <engine:Button text="RefillAmmo(-10 money)" name="PowerUp1" style="flex-grow: 1;" />
+            <engine:Button text="RefillHealth(-10 money)" name="PowerUp2" style="flex-grow: 1;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="Stats" style="flex-grow: 0; align-items: flex-start; align-self: flex-start; flex-direction: column;">
+            <engine:Label text="Health:" name="Health" style="align-items: flex-start; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; width: auto;" />
+            <engine:Label text="Ammo:&#10;" name="Ammunition" />
+            <engine:Label text="MONEY: " name="Money" style="height: auto; white-space: pre; -unity-text-align: upper-left; position: relative; top: -3px; left: -2px; width: auto; align-self: auto; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

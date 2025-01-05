@@ -1,5 +1,5 @@
 using System.Data.SqlTypes;
-using System.Reflection.Emit;
+
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +8,18 @@ public class OilBarrelScript : MonoBehaviour
 {
     private static bool alreadpickedip = false;
     private InputSystem_Actions controls;
-    public static int money = 0;
+    private static int cash = 0;
+    public static int money
+    {
+        get
+        {
+            return cash;
+        }
+        set { 
+            cash = value;
+            GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<Label>("Money").text = $"Money: {cash}";
+        }
+    }
     [SerializeField] private bool picked_up = false;
     private GameObject player;
     [SerializeField] private float timer = 5;

@@ -1,20 +1,34 @@
+using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class GunScript : MonoBehaviour
 {
+    
     private const int speed = 3;
     int dir = -1;
     GameObject bullet;
     private Animator anim;
-    private int ammo = 10;
+    private int amm;
+    public int ammo { get
+        {
+            return amm;
+        }
+        set
+        {
+            amm = value;
+            GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Ammunition").text = $"Ammo : {amm}";
+        }
+    }
     private InputSystem_Actions controls;
     public bool active { get; set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        ammo = 10;
         active = true;
         bullet = Resources.Load<GameObject>("bullet");
         controls = new();
@@ -52,13 +66,17 @@ public class GunScript : MonoBehaviour
     }
     void Shoot(InputAction.CallbackContext ctx)
     {
-        anim.SetTrigger("shoot");
-        
+        if (ammo > 0)
+        {
+            anim.SetTrigger("shoot");
+            ammo--;
+        }
         
     }
     
     public void Other()
     {
+        
         Vector2 start_point = new Vector2(gameObject.transform.position.x+(dir), gameObject.transform.position.y);
         Debug.Log(start_point);
         var Bullet = Instantiate(bullet, position: start_point, rotation: Quaternion.identity);
