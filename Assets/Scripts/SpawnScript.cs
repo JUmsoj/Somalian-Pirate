@@ -17,4 +17,12 @@ public class SpawnScript : ScriptableObject
         }
 
     }
+    public void Spawn(float times, Vector2 start, GameObject shrapnel)
+    {
+        for(int i = 0 ; i < times; i++)
+        {
+            GameObject shrap = Instantiate(shrapnel, start, Quaternion.identity);
+            shrap.GetComponent<Rigidbody2D>().AddForce(ShellScript.NewRandomVector2(-3, 3)*4);
+        }
+    }
 }

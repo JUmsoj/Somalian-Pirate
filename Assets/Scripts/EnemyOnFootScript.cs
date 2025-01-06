@@ -69,7 +69,7 @@ public class EnemyOnFootScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log($" {gameObject.name} Collided with {collision.gameObject.name}");
-        if (collision.gameObject.name == "bullet(Clone)") Destroy(gameObject);
+        if (collision.gameObject.name == "bullet(Clone)" || collision.gameObject.name == "Shrapnel(Clone)") Destroy(gameObject);
         if (collision.gameObject.name == "Triangle") collision.gameObject.GetComponent<PlayerScript>().health--;
     }
 

@@ -32,7 +32,7 @@ public class ShrapnelScript : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Triangle" && !onground) Destroy(collision.gameObject);
+        if (collision.gameObject.name == "Triangle" && !onground) PlayerScript.KillScreen();
         else if (collision.gameObject.CompareTag("Ship") && lifespan > 2) onground = true;
     }
 }

@@ -57,6 +57,7 @@ public class PlayerScript : MonoBehaviour
     
     private void Awake() 
     {
+        GrenadeScript.grenades = 3;
         doc = GameObject.FindFirstObjectByType<UIDocument>();
         _actions = new();
         rb = GetComponent<Rigidbody2D>();
@@ -69,6 +70,15 @@ public class PlayerScript : MonoBehaviour
         {
             rb.AddForceY(2000);
         };
+        _actions.Player.Throw.Enable();
+        _actions.Player.Throw.performed += (ctx) =>
+        {
+            if (GrenadeScript.grenades > 0)
+            {
+                Instantiate(Resources.Load<GameObject>("Grenade"), gameObject.transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().AddForce(new Vector2(GunScript.dir * 10, 4));
+                GrenadeScript.grenades--;
+            }
+        };
     }
     private void OnDisable()
     {
@@ -80,7 +90,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        if (doc.rootVisualElement.Q<Label>("Health") != null) GameplayUIScript.UpdateHud<Label>(doc, "Health", $"Health: {health}");
+        if (doc.rootVisualElement.Q<Label>("Health") != null) GameplayUIScript.UpdateHud<Label>(doc, "Health", health);
         if (health <= 0)
         {
             KillScreen();

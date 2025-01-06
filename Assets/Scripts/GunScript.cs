@@ -10,7 +10,7 @@ public class GunScript : MonoBehaviour
 {
     
     private const int speed = 3;
-    int dir = -1;
+    public static int dir { get; set; } = -1;
     GameObject bullet;
     private Animator anim;
     private int amm;
@@ -25,7 +25,7 @@ public class GunScript : MonoBehaviour
                 try
                 {
                     amm = value;
-                    GameplayUIScript.UpdateHud<Label>(GameObject.FindFirstObjectByType<UIDocument>(), "Ammunition", $"Ammo {amm}");
+                    GameplayUIScript.UpdateHud<Label>(GameObject.FindFirstObjectByType<UIDocument>(), "Ammunition", amm);
                 }
                 catch(Exception)
                 {
@@ -81,7 +81,7 @@ public class GunScript : MonoBehaviour
         if (ammo > 0)
         {
             anim.SetTrigger("shoot");
-            ammo--;
+            
         }
         
     }
@@ -89,16 +89,16 @@ public class GunScript : MonoBehaviour
     public void Other()
     {
         
-        Vector2 start_point = new Vector2(gameObject.transform.position.x+(dir), gameObject.transform.position.y);
-        Debug.Log(start_point);
-        var Bullet = Instantiate(bullet, position: start_point, rotation: Quaternion.identity);
+       
+        var Bullet = Instantiate(bullet, position: new Vector2(gameObject.transform.position.x + (dir), gameObject.transform.position.y), rotation: Quaternion.identity);
         
         Rigidbody2D rb = Bullet?.GetComponent<Rigidbody2D>();
         Bullet.AddComponent<BulletScript>();
         rb.gravityScale = 0.1f;
         if (rb != null) Debug.Log("Hey");
         rb.AddForce(new Vector2(dir * 500, 0));
-        
+        ammo--;
+
     }
     void Start()
     {

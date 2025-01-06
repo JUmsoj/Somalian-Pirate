@@ -19,7 +19,7 @@ public class OilBarrelScript : MonoBehaviour
         set { 
             cash = value;
             if (SceneManager.GetActiveScene().name == "Ship")
-                GameplayUIScript.UpdateHud<Label>(GameObject.FindAnyObjectByType<UIDocument>(), "Money", $"Money {cash}");
+                GameplayUIScript.UpdateHud<Label>(GameObject.FindAnyObjectByType<UIDocument>(), "Money", cash);
         }
     }
     [SerializeField] private bool picked_up = false;

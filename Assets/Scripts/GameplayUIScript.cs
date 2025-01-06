@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class GameplayUIScript : MonoBehaviour
 {
+    private VisualElement root;
     private UIDocument doc;
     [SerializeField] bool settings = false;
     private InputSystem_Actions actions;
@@ -22,7 +23,7 @@ public class GameplayUIScript : MonoBehaviour
         Settings = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Resources/Settings.uxml");
         HUD = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/UIStuff/doc.uxml");
         OnHUD();
-
+        
 
 
         actions = new();
@@ -33,11 +34,13 @@ public class GameplayUIScript : MonoBehaviour
             if (settings)
             {
                 OnSettings();
+               
             }
             else
             {
 
                 OnHUD();
+                
             }
         };
     }
@@ -46,8 +49,9 @@ public class GameplayUIScript : MonoBehaviour
 
 
         doc.visualTreeAsset = Settings;
-        exitmainmenu = doc.rootVisualElement.Q<Button>("ExitMainMenu");
-        exitgame = doc.rootVisualElement.Q<Button>("ExitGame");
+        root = doc.rootVisualElement;
+        exitmainmenu = root.Q<Button>("ExitMainMenu");
+        exitgame = root.Q<Button>("ExitGame");
         Callbacks("pause");
 
 
@@ -94,16 +98,36 @@ public class GameplayUIScript : MonoBehaviour
 
 
         doc.visualTreeAsset = HUD;
-        ammo = doc.rootVisualElement.Q<VisualElement>("PowerUps").Q<Button>("PowerUp1");
-        medkit = doc.rootVisualElement.Q<VisualElement>("PowerUps").Q<Button>("PowerUp2");
+        root = doc.rootVisualElement;
+        ammo = root.Q<VisualElement>("PowerUps").Q<Button>("PowerUp1");
+        medkit = root.Q<VisualElement>("PowerUps").Q<Button>("PowerUp2");
         Callbacks("hud");
 
 
 
     }
-    public static void UpdateHud<T>(UIDocument doc, string name, string text) where T : Label
+    public static void UpdateHud<T>(UIDocument doc, string name,  float val) where T : Label
     {
-        doc.rootVisualElement.Q<T>(name).text = text;
+        Label element = doc.rootVisualElement.Q<T>(name);
+        if (element != null && doc)
+        {
+            switch(name) {
+                case "Ammunition":
+                    element.text = $"Ammo: {val}";
+                    break;
+                case "Health":
+                    element.text = $"Health :{val}";
+                    break;
+                case "Money":
+                    element.text = $"Money: {val}";
+                    break;
+                case "Grenades":
+                    element.text = $"Grenades: {val}";
+                    break;
+                
+            }
+
+        }
     }
     void PowerUp(string ammo)
     {
