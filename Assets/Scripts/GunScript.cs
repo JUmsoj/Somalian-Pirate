@@ -1,5 +1,5 @@
 using System;
-using System.Reflection.Emit;
+
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
@@ -25,7 +25,7 @@ public class GunScript : MonoBehaviour
                 try
                 {
                     amm = value;
-                    GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Ammunition").text = $"Ammo : {amm}";
+                    GameplayUIScript.UpdateHud<Label>(GameObject.FindFirstObjectByType<UIDocument>(), "Ammunition", $"Ammo {amm}");
                 }
                 catch(Exception)
                 {

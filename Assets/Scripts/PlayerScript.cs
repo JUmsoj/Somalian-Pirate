@@ -80,7 +80,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        if(doc.rootVisualElement.Q<Label>("Health") != null) doc.rootVisualElement.Q<Label>("Health").text = $"Health: {health}";
+        if (doc.rootVisualElement.Q<Label>("Health") != null) GameplayUIScript.UpdateHud<Label>(doc, "Health", $"Health: {health}");
         if (health <= 0)
         {
             KillScreen();

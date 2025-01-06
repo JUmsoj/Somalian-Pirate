@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class GameplayUIScript : MonoBehaviour
 {
     private UIDocument doc;
-    [SerializeField] bool settings=false;
+    [SerializeField] bool settings = false;
     private InputSystem_Actions actions;
     private Button exitmainmenu;
     private Button exitgame;
@@ -22,14 +22,14 @@ public class GameplayUIScript : MonoBehaviour
         Settings = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Resources/Settings.uxml");
         HUD = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/UIStuff/doc.uxml");
         OnHUD();
-       
-        
-       
+
+
+
         actions = new();
         actions.Player.Exiting.Enable();
         actions.Player.Exiting.performed += (ctx) => {
             settings = !settings;
-            Debug.LogError ("performed");
+            Debug.LogError("performed");
             if (settings)
             {
                 OnSettings();
@@ -44,7 +44,7 @@ public class GameplayUIScript : MonoBehaviour
     void OnSettings()
     {
 
-        
+
         doc.visualTreeAsset = Settings;
         exitmainmenu = doc.rootVisualElement.Q<Button>("ExitMainMenu");
         exitgame = doc.rootVisualElement.Q<Button>("ExitGame");
@@ -54,7 +54,7 @@ public class GameplayUIScript : MonoBehaviour
     }
     private void Callbacks(string ui)
     {
-        switch(ui.ToLower())
+        switch (ui.ToLower())
         {
             case "hud":
                 if (exitgame != null)
@@ -92,7 +92,7 @@ public class GameplayUIScript : MonoBehaviour
     void OnHUD()
     {
 
-        
+
         doc.visualTreeAsset = HUD;
         ammo = doc.rootVisualElement.Q<VisualElement>("PowerUps").Q<Button>("PowerUp1");
         medkit = doc.rootVisualElement.Q<VisualElement>("PowerUps").Q<Button>("PowerUp2");
@@ -100,6 +100,10 @@ public class GameplayUIScript : MonoBehaviour
 
 
 
+    }
+    public static void UpdateHud<T>(UIDocument doc, string name, string text) where T : Label
+    {
+        doc.rootVisualElement.Q<T>(name).text = text;
     }
     void PowerUp(string ammo)
     {
