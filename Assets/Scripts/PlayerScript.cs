@@ -15,12 +15,14 @@ public class PlayerScript : MonoBehaviour
     private InputSystem_Actions _actions;
     [SerializeField] private float speed;
      UIDocument doc;
+    private InputAction plant;
     public int health
     {
         get;
         set;
     } = 100;
     public bool thing = false;
+    private GameObject c4;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     public static void KillScreen()
@@ -57,10 +59,23 @@ public class PlayerScript : MonoBehaviour
     
     private void Awake() 
     {
+
+        c4 = Resources.Load<GameObject>("C4");
+        c4script.C4s = 3;
         GrenadeScript.grenades = 3;
         doc = GameObject.FindFirstObjectByType<UIDocument>();
         _actions = new();
         rb = GetComponent<Rigidbody2D>();
+        plant = _actions.Player.Plant;
+        plant.Enable();
+        plant.performed += e =>
+        {
+            Instantiate(c4, gameObject.transform.position, Quaternion.identity);
+            c4script.C4s--;
+            Debug.LogWarning("Bomb has been planted");
+        };
+        
+       
     }
     private void OnEnable()
     {

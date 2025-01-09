@@ -124,6 +124,9 @@ public class GameplayUIScript : MonoBehaviour
                 case "Grenades":
                     element.text = $"Grenades: {val}";
                     break;
+                case "C4s":
+                    element.text = $"C4s: {val}";
+                    break;
                 
             }
 

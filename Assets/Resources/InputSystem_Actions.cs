@@ -107,6 +107,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Plant"",
+                    ""type"": ""Button"",
+                    ""id"": ""270b5aaa-7c72-4bf4-acf8-c562dd3c8085"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -327,6 +336,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fc470a0-1525-476e-8409-2ee18c29dc34"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Plant"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -923,6 +943,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
         m_Player_Exiting = m_Player.FindAction("Exiting", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
+        m_Player_Plant = m_Player.FindAction("Plant", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1011,6 +1032,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Drop;
     private readonly InputAction m_Player_Exiting;
     private readonly InputAction m_Player_Throw;
+    private readonly InputAction m_Player_Plant;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1024,6 +1046,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
         public InputAction @Exiting => m_Wrapper.m_Player_Exiting;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
+        public InputAction @Plant => m_Wrapper.m_Player_Plant;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1060,6 +1083,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Throw.started += instance.OnThrow;
             @Throw.performed += instance.OnThrow;
             @Throw.canceled += instance.OnThrow;
+            @Plant.started += instance.OnPlant;
+            @Plant.performed += instance.OnPlant;
+            @Plant.canceled += instance.OnPlant;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1091,6 +1117,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Throw.started -= instance.OnThrow;
             @Throw.performed -= instance.OnThrow;
             @Throw.canceled -= instance.OnThrow;
+            @Plant.started -= instance.OnPlant;
+            @Plant.performed -= instance.OnPlant;
+            @Plant.canceled -= instance.OnPlant;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1282,6 +1311,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnExiting(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
+        void OnPlant(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
