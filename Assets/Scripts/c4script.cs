@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class c4script : MonoBehaviour
 {
+    private Rigidbody2D body;
     private Vector2 frozenat;
     bool frozen;
     private InputAction blowthisup;
@@ -30,6 +31,8 @@ public class c4script : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        
+        body = GetComponent<Rigidbody2D>();
         document = GameObject.FindFirstObjectByType<UIDocument>();  
         shrapnel = Resources.Load<GameObject>("Shrapnel");
         action = new();
@@ -69,7 +72,7 @@ public class c4script : MonoBehaviour
     }
     void Explode()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = body;
         rb.AddForceX(5);
         rb.Sleep();
         spawnScript.Spawn(5, transform.position, shrapnel);
@@ -78,7 +81,7 @@ public class c4script : MonoBehaviour
     }
     void Freeze(Vector2 pos)
     {
-        Rigidbody2D body = GetComponent<Rigidbody2D>();
+        
         frozenat = pos;
         body.position = frozenat;
         frozen = true;
@@ -86,8 +89,5 @@ public class c4script : MonoBehaviour
         
     }
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

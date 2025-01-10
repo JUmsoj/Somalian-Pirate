@@ -1,4 +1,5 @@
 using Mono.Cecil.Cil;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float speed;
      UIDocument doc;
     private InputAction plant;
+    
     public int health
     {
         get;
@@ -35,10 +37,9 @@ public class PlayerScript : MonoBehaviour
             SceneManager.LoadScene("MainMenu");
         }
         UIDocument screen = new GameObject("KillScreen").AddComponent<UIDocument>();
-        screen.panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
-        screen.panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
-        screen.panelSettings.themeStyleSheet = AssetDatabase.LoadAssetAtPath<ThemeStyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
-        screen.visualTreeAsset = Resources.Load<VisualTreeAsset>("KillScreen");
+        
+        
+        NewDocument(screen, Resources.Load<VisualTreeAsset>("KillScreen"));
         foreach (var i in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.InstanceID))
         {
             if (i.name != "Main Camera" && i.name != "KillScreen") {
@@ -56,7 +57,13 @@ public class PlayerScript : MonoBehaviour
         screen.gameObject.AddComponent<Sigma>().StartCoroutine(enumerator());
         Destroy(player);
     }
-    
+    static void NewDocument(UIDocument doc, VisualTreeAsset asset, ThemeStyleSheet theme = null)
+    {
+        doc.panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
+        doc.panelSettings.themeStyleSheet = theme != null ? theme : AssetDatabase.LoadAssetAtPath<ThemeStyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
+        doc.panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+        doc.visualTreeAsset = asset;
+    }
     private void Awake() 
     {
 
@@ -68,14 +75,18 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         plant = _actions.Player.Plant;
         plant.Enable();
-        plant.performed += e =>
+        plant.performed += Plant;
+        
+       
+    }
+    void Plant(InputAction.CallbackContext ctx)
+    {
+        if (c4script.C4s > 1)
         {
             Instantiate(c4, gameObject.transform.position, Quaternion.identity);
             c4script.C4s--;
             Debug.LogWarning("Bomb has been planted");
-        };
-        
-       
+        }
     }
     private void OnEnable()
     {
@@ -124,7 +135,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (!grounded)
         {
-            rb.linearVelocityY = -1f;
+            rb.linearVelocityY = -3f;
         }
        
     }
@@ -161,13 +172,13 @@ public class Sigma : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
+        UIDocument doc;
         if (!completed && cooldown <= 0)
         {
-            var doc = gameObject.GetComponent<UIDocument>();
+            doc = gameObject.GetComponent<UIDocument>();
 
             completed = true;
-            List<StylePropertyName> styles = new List<StylePropertyName>();
-            styles.Add(new StylePropertyName("opacity"));
+            
 
             foreach(VisualElement item in doc.rootVisualElement.Q<VisualElement>("visual").Children())
             {
@@ -176,6 +187,7 @@ public class Sigma : MonoBehaviour
                 {
                     yield return new WaitForSeconds(3f);
                     item.RemoveFromClassList("word-change");
+                   
                 }
                 StartCoroutine(Wait());
                
