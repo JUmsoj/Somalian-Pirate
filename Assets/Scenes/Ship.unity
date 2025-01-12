@@ -557,6 +557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grounded: 1
   speed: 10
+  thing: 0
 --- !u!50 &101425457
 Rigidbody2D:
   serializedVersion: 5
@@ -820,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ab5c8b9a240f469e3123ca843ff72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: 0
 --- !u!1001 &874826615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1377,7 +1379,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 78a30f333f5627b4290ef7407fe9e05d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

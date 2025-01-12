@@ -116,6 +116,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""11b6b7a0-924a-44e4-9ff0-ab51c6bda235"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -347,6 +356,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Plant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35099b0e-5efc-4bb0-b7be-47e9fb5eafb2"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""melee"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -944,6 +964,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Exiting = m_Player.FindAction("Exiting", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         m_Player_Plant = m_Player.FindAction("Plant", throwIfNotFound: true);
+        m_Player_melee = m_Player.FindAction("melee", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1033,6 +1054,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Exiting;
     private readonly InputAction m_Player_Throw;
     private readonly InputAction m_Player_Plant;
+    private readonly InputAction m_Player_melee;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1047,6 +1069,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Exiting => m_Wrapper.m_Player_Exiting;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputAction @Plant => m_Wrapper.m_Player_Plant;
+        public InputAction @melee => m_Wrapper.m_Player_melee;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1086,6 +1109,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Plant.started += instance.OnPlant;
             @Plant.performed += instance.OnPlant;
             @Plant.canceled += instance.OnPlant;
+            @melee.started += instance.OnMelee;
+            @melee.performed += instance.OnMelee;
+            @melee.canceled += instance.OnMelee;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1120,6 +1146,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Plant.started -= instance.OnPlant;
             @Plant.performed -= instance.OnPlant;
             @Plant.canceled -= instance.OnPlant;
+            @melee.started -= instance.OnMelee;
+            @melee.performed -= instance.OnMelee;
+            @melee.canceled -= instance.OnMelee;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1312,6 +1341,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnExiting(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnPlant(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

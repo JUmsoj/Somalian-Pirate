@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 public class PlayerScript : MonoBehaviour
 {
+    
     [SerializeField] bool grounded = false;
     Rigidbody2D rb;
     private InputSystem_Actions _actions;
@@ -29,8 +30,8 @@ public class PlayerScript : MonoBehaviour
     
     public static void KillScreen()
     {
-        GameObject player = null;
-      IEnumerator enumerator()
+        GameObject? player = null;
+      static IEnumerator enumerator()
         {
             yield return new WaitForSeconds(40);
             Destroy(GameObject.Find("KillScreen"));
@@ -55,7 +56,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
         screen.gameObject.AddComponent<Sigma>().StartCoroutine(enumerator());
-        Destroy(player);
+        Destroy(player != null ? player : GameObject.FindFirstObjectByType<PlayerScript>().gameObject);
     }
     static void NewDocument(UIDocument doc, VisualTreeAsset asset, ThemeStyleSheet theme = null)
     {
@@ -124,8 +125,7 @@ public class PlayerScript : MonoBehaviour
         Vector2 move = _actions.Player.Move.ReadValue<Vector2>()*speed;
         if(move != Vector2.zero) Debug.Log(move);
         
-        // GetOrAddComponent
-        // GetOrAddComponent
+       
         rb.linearVelocityX = move.x;
         
         Gravity();

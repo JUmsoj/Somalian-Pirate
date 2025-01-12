@@ -9,8 +9,8 @@ public class ShrapnelScript : MonoBehaviour
     [SerializeField] private float decomposition = 5;
     private void Update()
     {
-        lifespan += Time.deltaTime;
-        if(onground )
+        if(!onground) lifespan += Time.deltaTime;
+        else 
         {
             decomposition -= Time.deltaTime;
             if(decomposition <= 0 )

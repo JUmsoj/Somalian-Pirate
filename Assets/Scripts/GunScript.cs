@@ -8,7 +8,9 @@ using UnityEngine.UIElements;
 
 public class GunScript : MonoBehaviour
 {
-    
+    private BoxCollider2D Collider;
+    private Rigidbody2D rb;
+    public static bool melee { get; set; } = false;
     private const int speed = 3;
     public static int dir { get; set; } = -1;
     GameObject bullet;
@@ -44,6 +46,7 @@ public class GunScript : MonoBehaviour
         active = true;
         bullet = Resources.Load<GameObject>("bullet");
         controls = new();
+        
         anim = GetComponent<Animator>();
         controls.Player.Axis.Enable();
         controls.Player.Axis.performed += (ctx) =>
@@ -62,23 +65,40 @@ public class GunScript : MonoBehaviour
             }
         };
     }
+    void Melee(InputAction.CallbackContext ctx)
+    {
+        rb = gameObject.AddComponent<Rigidbody2D>();
+        Collider = gameObject.AddComponent<BoxCollider2D>();
+        anim.SetTrigger("melee");
+        melee = true;
+    }
+    void PullBack()
+    {
+        Destroy(rb);
+        Destroy(Collider);
+        melee = false;
+    }
     private void Update()
     {
         gameObject.SetActive(active);
     }
     private void OnEnable()
     {
+        controls.Player.melee.Enable();
+        controls.Player.melee.performed += Melee;
         controls.Player.Shoot.Enable();
         controls.Player.Shoot.performed += Shoot;
     }
     private void OnDisable()
     {
+        controls.Player.melee.Disable();
+        controls.Player.melee.performed -= Shoot;
         controls.Player.Shoot.Disable();
         controls.Player.Shoot.performed -= Shoot;
     }
     void Shoot(InputAction.CallbackContext ctx)
     {
-        if (ammo > 0)
+        if (ammo > 0 && !melee)
         {
             anim.SetTrigger("shoot");
             

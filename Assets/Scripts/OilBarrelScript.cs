@@ -65,7 +65,7 @@ public class OilBarrelScript : MonoBehaviour
     {
         for(int i = 0; i < times; i++)
         {
-            float random_x = UnityEngine.Random.Range(0, 10);
+            float random_x = Random.Range(0, 10);
             var barrel = Instantiate<GameObject>(Resources.Load<GameObject>("OilBarrel"), new Vector2(random_x, 5), Quaternion.identity);
             barrel.GetComponent<Rigidbody2D>().AddForceY(-20);
         }
@@ -82,7 +82,7 @@ public class OilBarrelScript : MonoBehaviour
     }
     private void Start()
     {
-        label = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Money");
+        label = GameObject.FindFirstObjectByType<UIDocument>().rootVisualElement.Q<UnityEngine.UIElements.Label>("Money");
     }
     private void OnEnable()
     {

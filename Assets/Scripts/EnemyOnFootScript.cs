@@ -71,6 +71,7 @@ public class EnemyOnFootScript : MonoBehaviour
         Debug.Log($" {gameObject.name} Collided with {collision.gameObject.name}");
         if (collision.gameObject.name == "bullet(Clone)" || collision.gameObject.name == "Shrapnel(Clone)") Destroy(gameObject);
         if (collision.gameObject.name == "Triangle") collision.gameObject.GetComponent<PlayerScript>().health--;
+        if (collision.gameObject.name == "gun") Destroy(gameObject);
     }
 
 }

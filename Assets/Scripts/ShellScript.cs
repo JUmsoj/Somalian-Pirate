@@ -25,7 +25,7 @@ public class ShellScript : MonoBehaviour
         for (int i = 0; i < shrapnel_amt; i++)
         {
             Vector3 pos = gameObject.transform.position;
-            Instantiate(shrapnel, position: new Vector2(pos.x + UnityEngine.Random.Range(0, 2), pos.y + UnityEngine.Random.Range(0, 2)), rotation: Quaternion.identity).GetComponent<Rigidbody2D>().AddForce(NewRandomVector2(-5, 5, 0, 5));
+            Instantiate(shrapnel, new Vector2(pos.x + UnityEngine.Random.Range(0, 2), pos.y + UnityEngine.Random.Range(0, 2)), Quaternion.identity).GetComponent<Rigidbody2D>().AddForce(NewRandomVector2(-5, 5, 0, 5));
         }
             blow.RemoveListener(BlowUp);
             Destroy(gameObject);
