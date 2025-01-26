@@ -58,15 +58,52 @@ public class PlayerScript : MonoBehaviour
         screen.gameObject.AddComponent<Sigma>().StartCoroutine(enumerator());
         Destroy(player != null ? player : GameObject.FindFirstObjectByType<PlayerScript>().gameObject);
     }
-    static void NewDocument(UIDocument doc, VisualTreeAsset asset, ThemeStyleSheet theme = null)
+    public static void NewDocument(UIDocument doc, VisualTreeAsset asset, ThemeStyleSheet theme = null)
     {
         doc.panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
         doc.panelSettings.themeStyleSheet = theme != null ? theme : AssetDatabase.LoadAssetAtPath<ThemeStyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
         doc.panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
         doc.visualTreeAsset = asset;
     }
+    public static T NewElement<T>(UIDocument document, params string[] classes) where T : VisualElement, new()
+    {
+        T element = new();
+        document.rootVisualElement.Add(element);
+        for(int i = 0; i < classes.Length; i++)
+        {
+            element.AddToClassList(classes[i]);
+        }
+        return element;
+
+    }
+    public static T NewElement<T>(VisualElement element, params string[] classes) where T : VisualElement, new()
+    {
+        T child = new();
+        foreach(string className in classes)
+        {
+            child.AddToClassList(className);
+        }
+        element.Add(child);
+        return child;
+    }
+    public static Label NewElement(VisualElement element,  string text, params string[] classes)
+    {
+        Label label = new();
+        element.Add(label);
+        label.text = text;
+        return label;
+    }
+    public static Button NewButtonElement<T>(VisualElement element, string text, EventCallback<T> callback,  params string[] classes) where T : EventBase<T>, new()
+    {
+        Button button = new();
+        element.Add(button);
+        button.RegisterCallbackOnce(callback);
+        button.text = text;
+        return button;
+    }
     private void Awake() 
     {
+        health += MainMenuScript.health_bought;
 
         c4 = Resources.Load<GameObject>("C4");
         c4script.C4s = 3;

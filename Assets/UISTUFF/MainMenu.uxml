@@ -6,5 +6,6 @@
         <engine:Button text="Settings&#10;" name="Settings" class="button" style="flex-wrap: nowrap; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; width: 500px; align-self: center; margin-top: 20px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px; font-size: 50px; flex-grow: 1;" />
         <engine:FloatField label="Difficulty:" value="0" class="button" />
         <engine:Label text="High Score: " name="HighScore" style="flex-grow: 1; margin-top: 20px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px; -unity-text-align: middle-left; font-size: 30px;" />
+        <engine:Label text="Money: " name="money" />
     </engine:VisualElement>
 </engine:UXML>

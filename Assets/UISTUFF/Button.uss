@@ -1,7 +1,11 @@
+.button:hover {
+    scale: 3 3;
+}
+
 .button {
     position: relative;
     align-items: center;
-    font-size: 50px;
+    font-size: 25px;
     -unity-text-align: upper-center;
     align-self: auto;
     justify-content: flex-start;
@@ -15,4 +19,5 @@
     padding-bottom: 0;
     padding-left: 0;
     width: 500px;
+    scale: 0.5 0.5;
 }

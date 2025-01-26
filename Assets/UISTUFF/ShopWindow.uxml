@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UISTUFF/Button.uss?fileID=7433441132597879392&amp;guid=96c8568e910cc464ca0bfe4f3e380919&amp;type=3#Button" />
+    <engine:VisualElement name="root" style="flex-grow: 1; align-items: center;">
+        <engine:VisualElement name="closing" style="flex-grow: 0; align-self: center; align-items: flex-start;" />
+        <engine:VisualElement name="shop" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
+            <engine:Button text="Buy 10 Ammo" name="ammo" class="button" style="width: auto; align-self: center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 0; padding-top: 30px; padding-right: 30px; padding-bottom: 30px; padding-left: 30px;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

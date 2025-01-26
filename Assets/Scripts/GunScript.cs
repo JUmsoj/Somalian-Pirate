@@ -16,7 +16,7 @@ public class GunScript : MonoBehaviour
     GameObject bullet;
     private Animator anim;
     private int amm;
-    public int ammo { get
+    public  int ammo { get
         {
             return amm;
         }
@@ -27,7 +27,7 @@ public class GunScript : MonoBehaviour
                 try
                 {
                     amm = value;
-                    GameplayUIScript.UpdateHud<Label>(GameObject.FindFirstObjectByType<UIDocument>(), "Ammunition", amm);
+                    GameplayUIScript.UpdateHud<Label>(FindFirstObjectByType<UIDocument>(), "Ammunition", amm);
                 }
                 catch(Exception)
                 {
